@@ -1,0 +1,31 @@
+{
+   "$id": "7",
+   "Category": {
+      "$ref": "2",
+   },
+   "CategoryId": 1,
+   "CommentCount": 0,
+   "Comments": null,
+   "Content": "Yaygın inancın tersine, Lorem Ipsum rastgele sözcüklerden oluşmaz. Kökleri M.Ö. 45 tarihinden bu yana klasik Latin edebiyatına kadar uzanan 2000 yıllık bir 
+geçmişi vardır. Virginia daki Hampden-Sydney College dan Latince profesörü Richard McClintock, bir Lorem Ipsum pasajında geçen ve anlaşılması en güç sözcüklerden biri olan 
+consectetur sözcüğünün klasik edebiyattaki örneklerini incelediğinde kesin bir kaynağa ulaşmıştır. Lorm Ipsum, Çiçero tarafından M.Ö. 45 tarihinde kaleme alınan de Finibus 
+Bonorum et Malorum (iyi ve Kötünün Uç Sınırları) eserinin 1.10.32 ve 1.10.33 sayılı bölümlerinden gelmektedir. Bu kitap, ahlak kuramı üzerine bir tezdir ve Rönesans döneminde çok popüler olmuştur. Lorem Ipsum pasajının ilk satırı olan Lorem ipsum dolor sit amet 1.10.32 sayılı bölümdeki bir satırdan gelmektedir. 1500 lerden beri kullanılmakta 
+olan standard Lorem Ipsum metinleri ilgilenenler için yeniden üretilmiştir.Çiçero tarafından yazılan 1.10.32 ve 1.10.33 bölümleri de 1914 H.Rackham çevirisinden alınan İngilizce sürümleri eşliğinde özgün biçiminden yeniden üretilmiştir.",
+   "CreatedDate": "2021-06-22T01:13:10.6",
+   "CreaterName": "Migration",
+   "Date": "2021-06-22T01:13:10.6",
+   "Id": 4,
+   "IsActive": true,
+   "IsDeleted": false,
+   "ModifiedDate": "2021-06-22T01:13:10.6",
+   "ModifierName": "Migration",
+   "Note": "İlk Python Paylaşımı",
+   "SeoAuthor": "Python Developer",
+   "SeoDescription": "Python ile Algoritmalar ve Veri Analizi",
+   "SeoTags": "Python ile Algoritmalar ve Veri Analizi",
+   "Thumbnail": "postImages/defaultThumbnail.jpg",
+   "Title": "Python ile Veri Analizi",
+   "User": null,
+   "UserId": 1,
+   "ViewsCount": 99,
+}
