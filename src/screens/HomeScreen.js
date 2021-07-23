@@ -1,41 +1,50 @@
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet, View } from 'react-native'
-import { Text } from 'react-native-elements';
-import { NavigationEvents } from 'react-navigation'
-import useCategories from '../hooks/useCategories';
-import { FlatList } from 'react-native-gesture-handler';
+import { RefreshControl, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { Button, Card, Title, Paragraph } from 'react-native-paper';
 import { ActivityIndicator } from 'react-native-paper';
+import useArticles from '../hooks/useArticles';
 
-const HomeScreen = ({ route, navigation }) => {
+const HomeScreen = ({ navigation }) => {
 
-   let testView = null
 
-   const [articlesDatas, setArticlesDatas] = useState([])
    const [isReady, setIsReady] = useState(false)
 
-   var paramId = 0
-   if (route.params) {
-      paramId = route.params.categoryId;
-      testView = <Text> Id:{paramId} </Text>;
-      // setCategoryIds(paramId)
-   }
-
-   const [getCategoriesFromApi, categories] = useCategories()
+   const [getArticlesFromApi, articles] = useArticles()
 
 
    useEffect(() => {
-      if (paramId != 0) {
-
-         const articles = categories.find(category => category.Id == paramId)
-         console.log(articles.Articles.$values)
-         setArticlesDatas(articles.Articles.$values)
-      }
-      setTimeout(() => {
+      if (articles.length > 0)
          setIsReady(true)
-      }, 2000)
-   }, [paramId])
+      console.log("Articles lenght:" + articles.length)
+   }, [articles])
+
+   useEffect(() => {
+      const onFocus = navigation.addListener('focus', () => {
+         console.log("Home Screen focused");
+         getArticlesFromApi();
+      })
+      return onFocus;
+   }, [])
+
+   var renderCards = ({ item }) => (
+      <Card theme mode="elevated" style={{ margin: 5, padding: 5, flex: 1 }}>
+         <Card.Cover source={{ uri: 'https://cdn.shopify.com/s/files/1/0070/7032/files/blog_examples_hero.jpg?v=1528925017' }} />
+         <Card.Content>
+            <Title>{item.Title}</Title>
+            <Paragraph>{(item.SeoDescription).substring(0, 50)}</Paragraph>
+         </Card.Content>
+         <Card.Actions>
+            <Button
+               // onPress={() => navigation.navigate("Home", {
+               //    screen: "ArticleMain",
+               //    params: { articleData: item }
+               // })}
+               onPress={() => navigation.push("ArticleMain", { articleData: item, articleName: item.Title })}
+            >See More..</Button>
+         </Card.Actions>
+      </Card>
+   )
 
 
 
@@ -45,21 +54,21 @@ const HomeScreen = ({ route, navigation }) => {
       return (
          <View style={{ margin: 100 }}>
 
-            <ActivityIndicator animating={true} size="large" style={{ marginVertical: 250 }} color="black" />
+            <ActivityIndicator animating={true} size="medium" style={{ marginVertical: 150 }} color="black" />
          </View>
       )
    } else {
 
       return (
-         <View style={{ margin: 10 }}>
-            <SafeAreaView forceInset={{ top: 'always' }}>
+         <FlatList
+            keyExtractor={(item, index) => index.toString()}
+            data={articles}
+            renderItem={renderCards}
 
+         />
 
-            </SafeAreaView>
-         </View>
       )
    }
-
 }
 export default HomeScreen
 

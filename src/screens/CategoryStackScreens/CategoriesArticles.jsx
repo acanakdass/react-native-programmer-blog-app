@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { RefreshControl, StyleSheet, Text, View } from 'react-native'
 import { color } from 'react-native-elements/dist/helpers';
 import { FlatList } from 'react-native-gesture-handler';
 import { Button, Card, Title, Paragraph } from 'react-native-paper';
@@ -9,7 +9,6 @@ const CategoriesArticles = ({ route, navigation }) => {
 
    React.useEffect(() => {
       setArticles(route.params.articles)
-      console.log(articles);
    }, [route.params.articles])
 
 
@@ -26,9 +25,9 @@ const CategoriesArticles = ({ route, navigation }) => {
                //    screen: "ArticleMain",
                //    params: { articleData: item }
                // })}
-               onPress={() => navigation.push("ArticleMain", { articleData: item })}
+               onPress={() => navigation.push("ArticleMain", { articleData: item, articleName: item.Title })}
             >See More..</Button>
-            <Button onPress={() => console.log("clicked")} > See More..</Button>
+
          </Card.Actions>
       </Card>
    )

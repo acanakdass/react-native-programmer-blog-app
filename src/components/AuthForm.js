@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, KeyboardAvoidingView, ScrollView } from 'react-native'
+import { StyleSheet, View, KeyboardAvoidingView, ScrollView, Image, ImageBackground } from 'react-native'
 import { Text, Button, Input } from 'react-native-elements';
 import { TextInput } from 'react-native-paper';
 import Spacer from './Spacer';
@@ -14,10 +14,11 @@ const AuthForm = ({ headerText, signButtonText, signFunc, errorMessage }) => {
       <KeyboardAvoidingView>
          <ScrollView contentContainerStyle={styles.contentContainerStyle}>
             <View style={styles.container}>
-               <Text h3>{headerText}</Text>
+               <Text h3 style={{ textAlign: 'center' }}>{headerText}</Text>
 
                <Spacer margin={20} />
                <TextInput
+
                   label="Email"
                   value={email}
                   onChangeText={setEmail}
@@ -25,8 +26,9 @@ const AuthForm = ({ headerText, signButtonText, signFunc, errorMessage }) => {
                   autoCorrect={false}
                   mode="outlined"
                   outlineColor="lightgray"
-                  color="red"
+
                ></TextInput>
+
                <TextInput
                   outlineColor="lightgray"
                   mode="outlined"
@@ -47,7 +49,7 @@ const AuthForm = ({ headerText, signButtonText, signFunc, errorMessage }) => {
                <Spacer margin={10} />
 
                <Button
-                  style={{ backgroundColor: "black" }}
+                  buttonStyle={{ backgroundColor: 'black' }}
                   disabled={signButtonText == 'Sign Up' ? email === '' || password == '' || passwordRepeat == '' : email === '' || password == ''}
                   type="solid"
                   title={signButtonText}
@@ -66,10 +68,11 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       // marginBottom: 100,
-      marginHorizontal: 30
+      marginHorizontal: 30,
+      marginTop: 90
    },
    contentContainerStyle: {
-      paddingVertical: 120,
+      paddingVertical: 50,
    },
    errorMessage: {
       color: 'red',

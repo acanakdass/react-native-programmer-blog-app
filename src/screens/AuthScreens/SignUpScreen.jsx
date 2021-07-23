@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { StyleSheet, View, ToastAndroid } from 'react-native'
 import AuthForm from '../../components/AuthForm';
-import { NavigationEvents } from 'react-navigation';
 import { Button } from 'react-native-elements/dist/buttons/Button';
 import Spacer from '../../components/Spacer';
 
@@ -9,12 +8,7 @@ const SignUpScreen = ({ navigation }) => {
 
    return (
       <View>
-         {/* <NavigationEvents
-         // onWillFocus={()=>{}}
-         // onDidFocus={}
-         // onDidBlur={()=>{}}
-         // onWillFocus={clearErrorMessage}
-         /> */}
+
          <AuthForm
             headerText="Sign Up!"
             errorMessage=""
@@ -29,11 +23,6 @@ const SignUpScreen = ({ navigation }) => {
       </View>
    )
 }
-SignUpScreen.navigationOptions = () => {
-   return {
-      headerShown: false,
-   };
-};
 
 export default SignUpScreen
 

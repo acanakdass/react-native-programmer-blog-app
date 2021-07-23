@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-
+import { Button } from 'react-native-paper';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-
+import { AntDesign } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -13,8 +13,9 @@ import { Ionicons } from '@expo/vector-icons';
 
 import HomeScreen from './src/screens/HomeScreen';
 
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, LogBox } from 'react-native';
 import { AuthContext } from './src/context/AuthContext';
+import { Context as CategoriesContext } from './src/context/CategoriesContext';
 import SigninScreen from './src/screens/AuthScreens/SigninScreen';
 import SignUpScreen from './src/screens/AuthScreens/SignUpScreen';
 import AccountScreen from './src/screens/AccountScreen';
@@ -22,6 +23,7 @@ import SearchScreen from './src/screens/SearchScreen';
 import CategoriesScreen from './src/screens/CategoryStackScreens/CategoriesScreen';
 import CategoriesArticles from './src/screens/CategoryStackScreens/CategoriesArticles';
 import ArticleMainScreen from './src/screens/ArticleMainScreen';
+import CreateCategoryScreen from './src/screens/AdminScreens/CreateCategoryScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -34,15 +36,23 @@ const SearchStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const AuthStack = createStackNavigator();
 const RootStack = createStackNavigator();
+const AdminStack = createStackNavigator();
+
+
+
+LogBox.ignoreAllLogs();
+
+
+
 
 const AuthStackScreen = () => (
   <AuthStack.Navigator>
     <AuthStack.Screen
-      options={{ title: "Sign In" }}
+      options={{ title: "Sign In", headerTitleAlign: 'center', headerShown: false }}
       name="SignIn"
       component={SigninScreen} />
     <AuthStack.Screen
-      options={{ title: "SignUp" }}
+      options={{ title: "SignUp", headerTitleAlign: 'center', headerShown: false }}
       name="SignUp"
       component={SignUpScreen} />
   </AuthStack.Navigator>
@@ -52,28 +62,64 @@ const AppScreen = () => (
   <Drawer.Navigator>
     <Drawer.Screen name="Home" component={TabsScreen} />
     <Drawer.Screen name="Account" component={AccountScreen} />
+    <Drawer.Screen name="Admin" component={AdminStackScreen} />
   </Drawer.Navigator>
 )
 
-const HomeStackScreen = () => (
+const AdminStackScreen = ({ navigation }) => (
+  <AdminStack.Navigator>
+    <AdminStack.Screen name="CreateCategory" component={CreateCategoryScreen} options={{
+      title: "Create Category", headerTitleAlign: 'center', headerLeft: () => (
+        <AntDesign style={{ marginLeft: 10 }} name="menu-fold" size={24} color="black"
+          onPress={() => navigation.toggleDrawer()} />
+      )
+    }} />
+
+    {/* <HomeStack.Screen name="ArticleMain" component={ArticleMainScreen} options={{ title: "Article", animationEnabled: false }} /> */}
+  </AdminStack.Navigator>
+)
+const HomeStackScreen = ({ navigation }) => (
   <HomeStack.Navigator>
-    <HomeStack.Screen name="Home" component={HomeScreen} options={{ title: "Home Page" }} />
+    <HomeStack.Screen name="Home" component={HomeScreen} options={{
+      title: "Home Page", headerTitleAlign: 'center', headerLeft: () => (
+        <AntDesign style={{ marginLeft: 10 }} name="menu-fold" size={24} color="black"
+          onPress={() => navigation.toggleDrawer()} />
+      )
+    }} />
+    <HomeStack.Screen
+      name="ArticleMain"
+      component={ArticleMainScreen}
+      options={({ route }) => ({
+        title: route.params.articleName, headerTitleAlign: 'center'
+      })} />
+
     {/* <HomeStack.Screen name="ArticleMain" component={ArticleMainScreen} options={{ title: "Article", animationEnabled: false }} /> */}
   </HomeStack.Navigator>
 )
 
 const CategoryStackScreen = () => (
   <CategoryStack.Navigator>
-    <CategoryStack.Screen name="Categories" component={CategoriesScreen} options={{ title: "Categories" }} />
-    <CategoryStack.Screen name="CategoriesArticles" component={CategoriesArticles} options={{ title: "Articles of current category" }} />
-    <CategoryStack.Screen name="ArticleMain" component={ArticleMainScreen} options={{ title: "Article" }} />
+    <CategoryStack.Screen name="Categories" component={CategoriesScreen} options={{ title: "Categories", headerTitleAlign: 'center' }} />
+    <CategoryStack.Screen
+      name="CategoriesArticles"
+      component={CategoriesArticles}
+      options={({ route }) => ({
+        title: route.params.categoryName,
+        headerTitleAlign: 'center'
+      })} />
+
+    <CategoryStack.Screen
+      name="ArticleMain"
+      component={ArticleMainScreen}
+      options={({ route }) => ({
+        title: route.params.articleName, headerTitleAlign: 'center'
+      })} />
 
   </CategoryStack.Navigator>
 )
-
 const AccountStackScreen = () => (
   <AccountStack.Navigator>
-    <AccountStack.Screen name="Account" component={AccountScreen} options={{ title: "Account" }} />
+    <AccountStack.Screen name="Account" component={AccountScreen} />
   </AccountStack.Navigator>
 )
 
@@ -83,11 +129,11 @@ const ProfileStackScreen = () => (
   </ProfileStack.Navigator>
 )
 
-const SearchStackScreen = () => (
-  <SearchStack.Navigator>
-    <SearchStack.Screen name="Search" component={SearchScreen} />
-  </SearchStack.Navigator>
-)
+// const SearchStackScreen = () => (
+//   <SearchStack.Navigator>
+//     <SearchStack.Screen name="Search" component={SearchScreen} />
+//   </SearchStack.Navigator>
+// )
 
 const TabsScreen = () => (
   // <Tabs.Navigator>
@@ -101,9 +147,8 @@ const TabsScreen = () => (
     shifting
     labeled
     initialRouteName="Home"
-    barStyle={{ backgroundColor: 'white', }}
+    barStyle={{ backgroundColor: 'white', height: 50 }}
     screenOptions={({ route }) => ({
-
       tabBarIcon: ({ focused, color, size }) => {
         let iconName;
 
@@ -133,7 +178,6 @@ const TabsScreen = () => (
   >
     <Tab.Screen options={{ tabBarLabel: "Categories" }} name="Categories" component={CategoryStackScreen} />
     <Tab.Screen options={{ tabBarLabel: "Home" }} name="Home" component={HomeStackScreen} />
-    <Tab.Screen options={{ tabBarLabel: "Search" }} name="Search" component={SearchStackScreen} />
     <Tab.Screen options={{ tabBarLabel: "Account" }} name="Account" component={AccountStackScreen} />
 
   </Tab.Navigator>
@@ -150,7 +194,7 @@ const RootStackScreen = ({ userToken }) => (
 )
 const theme = {
   ...DefaultTheme,
-  roundness: 15,
+  roundness: 5,
   colors: {
     ...DefaultTheme.colors,
     primary: 'black',
@@ -180,20 +224,20 @@ export default () => {
   React.useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 2500)
+    }, 500)
   })
 
 
-  if (isLoading) {
-    return (
-      <ActivityIndicator style={{ marginTop: 300 }} size="large" color="black" />
-    )
-  }
+  // if (isLoading) {
+  //   return (
+  //     <ActivityIndicator style={{ marginTop: 300 }} size="large" color="black" />
+  //   )
+  // }
   return (
     <AuthContext.Provider value={authContext}>
+
+
       <PaperProvider theme={theme}>
-
-
         <NavigationContainer>
 
           <RootStackScreen userToken={userToken} />
