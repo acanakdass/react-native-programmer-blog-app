@@ -16,12 +16,12 @@ const HomeScreen = ({ navigation }) => {
    useEffect(() => {
       if (articles.length > 0)
          setIsReady(true)
-      console.log("Articles lenght:" + articles.length)
+      // console.log("Articles lenght:" + articles.length)
    }, [articles])
 
    useEffect(() => {
       const onFocus = navigation.addListener('focus', () => {
-         console.log("Home Screen focused");
+         // console.log("Home Screen focused");
          getArticlesFromApi();
       })
       return onFocus;
@@ -29,7 +29,7 @@ const HomeScreen = ({ navigation }) => {
 
    var renderCards = ({ item }) => (
       <Card theme mode="elevated" style={{ margin: 5, padding: 5, flex: 1 }}>
-         <Card.Cover source={{ uri: 'https://cdn.shopify.com/s/files/1/0070/7032/files/blog_examples_hero.jpg?v=1528925017' }} />
+         <Card.Cover source={{ uri: 'https://miro.medium.com/max/10884/1*5TRuG7tG0KrZJXKoFtHlSg.jpeg' }} />
          <Card.Content>
             <Title>{item.Title}</Title>
             <Paragraph>{(item.SeoDescription).substring(0, 50)}</Paragraph>

@@ -3,6 +3,7 @@ import blogApi from '../api/blogApi'
 
 export default () => {
    const [categories, setCategories] = useState([])
+   const [isPosting, setIsPosting] = useState(false)
 
    // const [errorMessage, seterrorMessage] = useState('')
 
@@ -24,13 +25,18 @@ export default () => {
 
    const postCategory = async (dataToSend) => {
 
+      setIsPosting(true)
       try {
          await blogApi.post("/categories", dataToSend)
             .then(res => {
                alert("Category created successfuly")
+               setIsPosting(false)
+
             })
       } catch (error) {
          alert(error)
+         setIsPosting(false)
+
       }
    }
 
@@ -38,5 +44,5 @@ export default () => {
       getCategoriesFromApi()
    }, [])
 
-   return [getCategoriesFromApi, categories, postCategory]
+   return [getCategoriesFromApi, categories, postCategory, isPosting]
 };

@@ -9,7 +9,7 @@ const CreateCategoryScreen = () => {
    const [name, setName] = useState('')
    const [description, setDescription] = useState('')
 
-   const [getCategoriesFromApi, categories, postCategory] = useCategories();
+   const [getCategoriesFromApi, categories, postCategory, isPosting] = useCategories();
 
    // const { postCategory } = React.useContext(CategoryContext)
 
@@ -35,8 +35,9 @@ const CreateCategoryScreen = () => {
             onChangeText={text => setDescription(text)}
          />
          <Spacer margin={10} />
-         <Button onPress={() => {
+         <Button loading={isPosting} onPress={() => {
             postCategory(data);
+
             // response == 200 ? alert(`category ${name} created`) : alert("Error while creating")
          }} title="Create Category" />
 

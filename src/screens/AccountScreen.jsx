@@ -11,6 +11,7 @@ const AccountScreen = ({ navigation }) => {
          <Button
             onPress={signOut}
          >Sign Out</Button>
+
       </View>
    )
 }

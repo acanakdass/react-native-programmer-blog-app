@@ -9,7 +9,10 @@ import { SocialIcon } from 'react-native-elements'
 
 const SigninScreen = ({ navigation }) => {
 
-   const { signIn } = React.useContext(AuthContext)
+   const { signIn, goWithoutSignIn } = React.useContext(AuthContext)
+
+
+
 
    return (
       <View style={styles.container}>
@@ -18,7 +21,7 @@ const SigninScreen = ({ navigation }) => {
             headerText="Sign In To Your Account"
             errorMessage=""
             signButtonText="Sign In"
-         // signFunc={({ email, password }) => signIn({ email, password })}
+            signFunc={() => signIn()}
          />
          {/* <SocialIcon
             title='Sign In With Facebook'
@@ -33,7 +36,7 @@ const SigninScreen = ({ navigation }) => {
          <Button
             type="clear"
             title="Go without Sign In"
-            onPress={signIn}
+            onPress={() => goWithoutSignIn()}
          />
          {/* <ImageBackground blurRadius={2} source={image} style={styles.image}>
          </ImageBackground> */}

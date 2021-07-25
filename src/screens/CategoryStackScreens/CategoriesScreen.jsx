@@ -21,7 +21,7 @@ const CategoriesScreen = ({ navigation }) => {
    useEffect(() => {
       const onFocus = navigation.addListener('focus', () => {
 
-         console.log('Categories screen focused!')
+         // console.log('Categories screen focused!')
          getCategoriesFromApi()
       })
       return onFocus;
@@ -30,7 +30,7 @@ const CategoriesScreen = ({ navigation }) => {
    useEffect(() => {
       const onBlur = navigation.addListener('blur', () => {
 
-         console.log('Categories screen blurred!')
+         // console.log('Categories screen blurred!')
 
       })
       return onBlur;

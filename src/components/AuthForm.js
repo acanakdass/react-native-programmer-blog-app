@@ -1,27 +1,68 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState } from 'react'
 import { StyleSheet, View, KeyboardAvoidingView, ScrollView, Image, ImageBackground } from 'react-native'
 import { Text, Button, Input } from 'react-native-elements';
-import { TextInput } from 'react-native-paper';
+import { Paragraph, TextInput } from 'react-native-paper';
+import blogApi from '../api/blogApi';
+import { AuthContext } from '../context/AuthContext';
 import Spacer from './Spacer';
+
 const AuthForm = ({ headerText, signButtonText, signFunc, errorMessage }) => {
+   const { signIn, goWithoutSignIn } = React.useContext(AuthContext)
 
 
-   const [email, setEmail] = useState('');
+   const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
    const [passwordRepeat, setPasswordRepeat] = useState('');
+   const [errorText, setErrorText] = useState('');
 
+   const [isSigningIn, setIsSigningIn] = useState(false);
+   const signInAsync = async () => {
+      setIsSigningIn(true)
+      setTimeout(() => {
+      }, 2000)
+      try {
+         await blogApi.post('/user/authenticate', {
+            "resultStatus": 0,
+            "message": "string",
+            "email": "user@example.com",
+            "userName": username,
+            "password": password,
+            "rememberMe": true
+         }).then(res => {
+            console.log("working")
+            console.log(res.data)
+            if (res.data == "") {
+               setErrorText("Please check your username or password")
+               setIsSigningIn(false)
+
+            } else {
+               setErrorText("")
+               signIn();
+            }
+            // AsyncStorage.setItem("tokenType", "admin")
+            return (res.data);
+         }).catch(err => {
+            console.log("errrr")
+            // console.log(err)
+
+         })
+      } catch (error) {
+         // console.log(error)
+      }
+   }
    return (
       <KeyboardAvoidingView>
          <ScrollView contentContainerStyle={styles.contentContainerStyle}>
             <View style={styles.container}>
                <Text h3 style={{ textAlign: 'center' }}>{headerText}</Text>
-
                <Spacer margin={20} />
+               <Paragraph style={{ textAlign: 'center', color: 'red' }}>{errorText}</Paragraph>
                <TextInput
 
-                  label="Email"
-                  value={email}
-                  onChangeText={setEmail}
+                  label="Username"
+                  value={username}
+                  onChangeText={setUsername}
                   autoCapitalize="none"
                   autoCorrect={false}
                   mode="outlined"
@@ -50,9 +91,11 @@ const AuthForm = ({ headerText, signButtonText, signFunc, errorMessage }) => {
 
                <Button
                   buttonStyle={{ backgroundColor: 'black' }}
-                  disabled={signButtonText == 'Sign Up' ? email === '' || password == '' || passwordRepeat == '' : email === '' || password == ''}
+                  disabled={signButtonText == 'Sign Up' ? username === '' || password == '' || passwordRepeat == '' : username === '' || password == ''}
                   type="solid"
+                  loading={isSigningIn}
                   title={signButtonText}
+                  onPress={signInAsync}
                />
 
             </View>
