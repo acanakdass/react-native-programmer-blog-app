@@ -5,7 +5,8 @@ import AccountScreen from '../../screens/AccountScreen';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import TabsScreen from './Tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AdminStackScreen from './AdminStackScreen';
+import AdminCategoryStackScreen from './AdminCategoryStackScreen';
+// import CategoriesList from '../../screens/AdminScreens/Categories/CategoriesList';
 const AppScreen = ({ navigation }) => {
 
    const Drawer = createDrawerNavigator();
@@ -34,8 +35,11 @@ const AppScreen = ({ navigation }) => {
          <Drawer.Screen name="Home" component={TabsScreen} />
          <Drawer.Screen name="Account" component={AccountScreen} />
          {tokenData == 'admin' ? (
-            <Drawer.Screen name="Admin" component={AdminStackScreen} />
+            < Drawer.Screen name="Categories" component={AdminCategoryStackScreen} />
          ) : null}
+         {/* {tokenData == 'admin' ? (
+            < Drawer.Screen name="Articles" component={CategoriesList} />
+         ): null} */}
       </Drawer.Navigator>
    )
 }

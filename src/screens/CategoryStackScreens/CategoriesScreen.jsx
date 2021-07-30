@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { ListItem, Icon } from 'react-native-elements'
 import { FlatList } from 'react-native-gesture-handler';
-import useCategories from '../../hooks/useCategories';
 import { ActivityIndicator } from 'react-native-paper';
 import { MaterialCommunityIcons, AntDesign, Ionicons, FontAwesome5 } from '@expo/vector-icons';
+import useCategories from '../../hooks/useCategories';
 
 const CategoriesScreen = ({ navigation }) => {
 

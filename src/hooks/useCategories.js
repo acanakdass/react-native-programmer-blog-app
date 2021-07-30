@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ToastAndroid } from "react-native";
 import blogApi from '../api/blogApi'
 
 export default () => {
@@ -34,7 +35,28 @@ export default () => {
 
             })
       } catch (error) {
+         console.log('Deleting Api')
+
          alert(error)
+         setIsPosting(false)
+
+      }
+   }
+
+   const deleteCategory = async (categoryId) => {
+      setIsPosting(true)
+      try {
+         await blogApi.delete(`/categories/${categoryId}`)
+            .then(res => {
+               console.log(res.data)
+               console.log(`/categories/${categoryId}`)
+               // alert("Category deleted")
+               ToastAndroid.show('Category Deleted', ToastAndroid.SHORT)
+               setIsPosting(false)
+
+            })
+      } catch (error) {
+
          setIsPosting(false)
 
       }
@@ -44,5 +66,5 @@ export default () => {
       getCategoriesFromApi()
    }, [])
 
-   return [getCategoriesFromApi, categories, postCategory, isPosting]
+   return [getCategoriesFromApi, categories, postCategory, isPosting, deleteCategory]
 };

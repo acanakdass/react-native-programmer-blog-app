@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements'
 import { TextInput } from 'react-native-paper'
-import Spacer from '../../components/Spacer'
-import useCategories from '../../hooks/useCategories'
+import Spacer from '../../../components/Spacer'
+import useCategories from '../../../hooks/useCategories'
 const CreateCategoryScreen = () => {
 
    const [name, setName] = useState('')

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { RefreshControl, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
-import { Button, Card, Title, Paragraph } from 'react-native-paper';
+import { Button, Card, Title, Paragraph, TextInput } from 'react-native-paper';
 import { ActivityIndicator } from 'react-native-paper';
 import useArticles from '../hooks/useArticles';
+import { Searchbar } from 'react-native-paper';
 
 const HomeScreen = ({ navigation }) => {
 
@@ -28,7 +29,7 @@ const HomeScreen = ({ navigation }) => {
    }, [])
 
    var renderCards = ({ item }) => (
-      <Card theme mode="elevated" style={{ margin: 5, padding: 5, flex: 1 }}>
+      <Card theme mode="elevated" style={styles.card} >
          <Card.Cover source={{ uri: 'https://miro.medium.com/max/10884/1*5TRuG7tG0KrZJXKoFtHlSg.jpeg' }} />
          <Card.Content>
             <Title>{item.Title}</Title>
@@ -60,16 +61,31 @@ const HomeScreen = ({ navigation }) => {
    } else {
 
       return (
-         <FlatList
-            keyExtractor={(item, index) => index.toString()}
-            data={articles}
-            renderItem={renderCards}
+         <View style={styles.container}>
+            <Searchbar
 
-         />
+               placeholder="Type Here..." />
+
+            <FlatList
+               keyExtractor={(item, index) => index.toString()}
+               data={articles}
+               renderItem={renderCards}
+            />
+         </View>
 
       )
    }
 }
 export default HomeScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+   card: {
+      margin: 5,
+      padding: 5,
+      flex: 1
+   },
+   container: {
+      margin: 5
+   },
+
+})

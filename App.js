@@ -23,7 +23,7 @@ import SearchScreen from './src/screens/SearchScreen';
 import CategoriesScreen from './src/screens/CategoryStackScreens/CategoriesScreen';
 import CategoriesArticles from './src/screens/CategoryStackScreens/CategoriesArticles';
 import ArticleMainScreen from './src/screens/ArticleMainScreen';
-import CreateCategoryScreen from './src/screens/AdminScreens/CreateCategoryScreen';
+import CreateCategoryScreen from './src/screens/AdminScreens/Categories/CreateCategoryScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthStackScreen from './src/navigation/navigatorScreens/AuthStackScreen';
 import AppScreen from './src/navigation/navigatorScreens/AppScreen';
@@ -67,7 +67,7 @@ const theme = {
 
 export default () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [userToken, setUserToken] = useState(null);
+  const [userToken, setUserToken] = useState('admin');
 
   const authContext = React.useMemo(() => {
     return {
